@@ -7,13 +7,14 @@ import concurrent.futures
 
 def load_and_index_dataset(dataset_name_or_path, config, cache_dir, raw_output_dir):
     
-    def export(file_path, sub_dataset, dataset_name, tot_sample):
+    def export(file_path, sub_dataset, dataset_name, tot_sample, split_name):
         with open(file_path, "w") as file_ptr:
             for dt in sub_dataset:
                 json_dt = {
                     "source": dt['inputs_pretokenized'],
                     "target": dt['targets_pretokenized'],
-                    "prompt_name": dataset_name
+                    "prompt_name": dataset_name,
+                    "split_name": split_name
                 }
                 file_ptr.write("{}\n".format(json.dumps(json_dt)))
         assert sum([1 for line in open(file_path, "r")]) == tot_sample
@@ -28,7 +29,7 @@ def load_and_index_dataset(dataset_name_or_path, config, cache_dir, raw_output_d
     for split, tot_sample in split_info.items():
         split_file_path = os.path.join(file_folder, "{}.jsonl".format(split))
         split_sub_dataset = sub_dataset[split]
-        export(split_file_path, split_sub_dataset, config[0], tot_sample)
+        export(split_file_path, split_sub_dataset, config[0], tot_sample, split)
 
     print("[x] Done {}".format(config))
     with open(os.path.join(raw_output_dir, "log.txt"), 'a') as filePtr:
