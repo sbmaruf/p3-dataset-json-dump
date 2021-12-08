@@ -32,7 +32,7 @@ def load_and_index_dataset(dataset_name_or_path, config, cache_dir, raw_output_d
 
     print("[x] Done {}".format(config))
     with open(os.path.join(raw_output_dir, "log.txt"), 'a') as filePtr:
-        filePtr.write("{}\n".format(config))
+        filePtr.write("{}\n".format(config[0]))
     return 0
 
 
@@ -73,8 +73,7 @@ def main():
 
     with open(os.path.join(args.raw_output_dir, "log.txt"), 'w') as filePtr:
         pass
-    # Test single call
-    # load_and_index_dataset(args.dataset_name_or_path, configs[0], args.cache_dir, args.raw_output_dir)
+
     # Run multiprocessor
     with concurrent.futures.ProcessPoolExecutor(max_workers=args.num_proc) as executor:
         results = executor.map(
@@ -88,7 +87,7 @@ def main():
     with open(os.path.join(args.raw_output_dir, "log.txt"), 'r') as filePtr:
         written_dataset = [line.strip() for line in  filePtr]
         for cfg in configs:
-            if cfg not in written_dataset:
+            if cfg[0] not in written_dataset:
                 print("Failed to extract {} dataset.".format(cfg))
 
 
