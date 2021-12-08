@@ -13,7 +13,7 @@ def load_and_index_dataset(dataset_name_or_path, config, cache_dir, raw_output_d
                 json_dt = {
                     "source": dt['inputs_pretokenized'],
                     "target": dt['targets_pretokenized'],
-                    "dataset": dataset_name
+                    "prompt_name": dataset_name
                 }
                 file_ptr.write("{}\n".format(json.dumps(json_dt)))
         assert sum([1 for line in open(file_path, "r")]) == tot_sample
