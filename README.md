@@ -40,4 +40,4 @@ python export_p3_to_jsonl.py \
 --num-proc 8
 ```
 
-This will create a json dumps for each of the dataset split of of P3 in $RAW_OUTPUT_DIR. 
+This will create a json dump for each of the dataset split of P3 in $RAW_OUTPUT_DIR. 
