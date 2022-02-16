@@ -1,6 +1,6 @@
 # Download and Export P3 dataset to jsonl format
 
-For some reason if you have GPU access, huggingface datasets occupy gpus to load the dataset. So please make sure your torch and tensorflow doesn't use cuda. Also note that, it donwloads the full P3 dataset at first then extract the json lines from the P3 dataset.
+For some reason if you have GPU access, tensorflow version of hf-datasets occupys gpus to load the dataset. So please make sure your torch and tensorflow don't use cuda. Also note that, it donwloads the full P3 dataset at first then extract the json lines from the P3 dataset.
 
 1. Clone the dataset repository.
 
