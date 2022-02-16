@@ -75,15 +75,23 @@ def main():
     with open(os.path.join(args.raw_output_dir, "log.txt"), 'w') as filePtr:
         pass
 
-    # Run multiprocessor
-    with concurrent.futures.ProcessPoolExecutor(max_workers=args.num_proc) as executor:
-        results = executor.map(
-            load_and_index_dataset,
-            [args.dataset_name_or_path for _ in range(total_num_config)],
-            configs,
-            [args.cache_dir for _ in range(total_num_config)],
-            [args.raw_output_dir for _ in range(total_num_config)]
-        )
+    # Sometimes datasets api hungs. Not sure it this is a hf-datasets issue or `concurrent` api issue.
+    # I was able to download full dataset without using multiprocessr. 
+    # So for a single process, I didn't use `concurrent` api
+    if args.num-proc > 1:
+        # Run multiprocessor
+        with concurrent.futures.ProcessPoolExecutor(max_workers=args.num_proc) as executor:
+            results = executor.map(
+                load_and_index_dataset,
+                [args.dataset_name_or_path for _ in range(total_num_config)],
+                configs,
+                [args.cache_dir for _ in range(total_num_config)],
+                [args.raw_output_dir for _ in range(total_num_config)]
+            )
+    else:
+        for config in configs:
+            load_and_index_dataset(args.dataset_name_or_path, config, args.cache_dir, args.raw_output_dir)
+    
 
     with open(os.path.join(args.raw_output_dir, "log.txt"), 'r') as filePtr:
         written_dataset = [line.strip() for line in  filePtr]
