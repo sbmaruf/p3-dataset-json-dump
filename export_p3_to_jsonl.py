@@ -78,7 +78,7 @@ def main():
     # Sometimes datasets api hungs. Not sure it this is a hf-datasets issue or `concurrent` api issue.
     # I was able to download full dataset without using multiprocessr. 
     # So for a single process, I didn't use `concurrent` api
-    if args.num-proc > 1:
+    if args.num_proc > 1:
         # Run multiprocessor
         with concurrent.futures.ProcessPoolExecutor(max_workers=args.num_proc) as executor:
             results = executor.map(

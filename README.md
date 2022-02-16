@@ -26,7 +26,7 @@ python export_p3_to_jsonl.py \
 --dataset-name-or-path "bigscience/P3" \
 --cache-dir $CACHE_DIR \
 --raw-output-dir "./raw_output_dir" \
---num-proc 8
+--num-proc 1
 ```
 
 use `--config` flag to specify specific prompted dataset from P3. All the dataset info can be found in `data_split_sizes.csv` 
